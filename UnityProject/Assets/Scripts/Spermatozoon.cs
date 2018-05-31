@@ -5,6 +5,8 @@ using UnityEngine;
 public class Spermatozoon : MonoBehaviour
 {
     const float maxDistance = 90f;
+    private float lifetime = 0f;
+    private float elapsed = 0f;
     private bool initilized = false;
     private Transform ovum;
 
@@ -14,13 +16,14 @@ public class Spermatozoon : MonoBehaviour
     {
         if (initilized == true)
         {
-            Vector2 deltaVector = (ovum.position - transform.position);
+            Vector3 deltaVector = (ovum.position - transform.position);
             float magnitude = deltaVector.magnitude;
-            Vector2 direction = deltaVector / magnitude;
+            Vector3 directionToTarget = deltaVector / magnitude;
+            Vector3 direction = transform.up;
 
-            float normalizedDistanceInv = ((1.0f - Mathf.Min(magnitude, maxDistance) / maxDistance) * .5f) + .5f;
+            float normalizedDistanceInv = ((1.0f - Mathf.Min(magnitude, maxDistance) / maxDistance) * 2f) - 1f;// -1 ... 1
             
-            float rad = (Mathf.Atan2(direction.y, direction.x));
+            /*float rad = (Mathf.Atan2(directionToTarget.y, directionToTarget.x));
             float normalizedRadians = (rad / Mathf.PI);
 
             float currentRotation = transform.rotation.eulerAngles.z % 360;
@@ -30,12 +33,15 @@ public class Spermatozoon : MonoBehaviour
             }
             float currentRotationNormalized = currentRotation / 360f;
             currentRotationNormalized = (currentRotationNormalized - 0.5f) * 2f;
+            */
+            float cosToTarget = Vector3.Dot(direction, directionToTarget);// -1 ... 1
 
             var inputs = new List<float>
             {
-                normalizedRadians,
+                //normalizedRadians,
                 normalizedDistanceInv,
-                currentRotationNormalized
+                //currentRotationNormalized
+                cosToTarget
             };
             net.FeedForward(inputs);
 
@@ -44,7 +50,7 @@ public class Spermatozoon : MonoBehaviour
             float moveLeft = output[1] * .5f + .5f;
             float moveForward = output[2] * .5f + .5f;
 
-            float speed = 0.1f;
+            float speed = 0.001f;
             if(moveForward > 0.9f)
             {
                 speed += 5f;
@@ -59,19 +65,25 @@ public class Spermatozoon : MonoBehaviour
                 rotation -= 2.5f;
             }
 
-            transform.position = transform.position + (speed * transform.up * deltatime);
+            transform.position = transform.position + (direction * speed * deltatime);
             transform.Rotate(new Vector3(0f, 0f, rotation));
 
+            elapsed = Mathf.Min(elapsed + deltatime, lifetime);
+
             float fitness = normalizedDistanceInv * .5f + .5f;
-            net.AddFitness(fitness * fitness);
+            fitness = fitness + fitness * ((lifetime - elapsed + 0.1f) / lifetime);
+            fitness += normalizedDistanceInv * .5f + .5f;
+            net.AddFitness(fitness);
         }
     }
 
-    public void Init(NeuralNetwork net, Transform ovum)
+    public void Init(NeuralNetwork net, Transform ovum, float duration)
     {
         this.ovum = ovum;
         this.net = net;
         initilized = true;
+        lifetime = duration;
+        elapsed = 0.0f;
     }
 
 

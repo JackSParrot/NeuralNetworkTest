@@ -34,7 +34,7 @@ public class Neuron
 
     static float eta = 0.0f;   // [0.0 ... 1.0] overall net training rate
     static float alpha = 0.0f; // [0.0 ...  n ] multiplier of the last weight change (momentum)
-    static float mutationRate = 1.0f;
+    static float mutationRate = 0.6f;
     private int _myIndex = 0;
     private float _outputVal = 0.0f;
     private float _gradient = 0.0f;
@@ -155,23 +155,23 @@ public class Neuron
                 randomNumber = randomNumber / mutationRate;
                 var conn = _outputWeights[c];
                 float weight = conn.weight;
-                if (randomNumber <= 0.2f)
+                if (randomNumber <= mutationRate * 0.2f)
                 { //if 1
                   //flip sign of weight
                     weight *= -1f;
                 }
-                else if (randomNumber <= 0.4f)
+                else if (randomNumber <= mutationRate * 0.4f)
                 { //if 2
                   //pick random weight between -1 and 1
                     weight = UnityEngine.Random.Range(-1f, 1f);
                 }
-                else if (randomNumber <= 0.6f)
+                else if (randomNumber <= mutationRate * 0.6f)
                 { //if 3
                   //randomly increase by 0% to 100%
                     float factor = UnityEngine.Random.Range(0f, 1f) + 1f;
                     weight *= factor;
                 }
-                else if (randomNumber <= 0.8f)
+                else if (randomNumber <= mutationRate * 0.8f)
                 { //if 4
                   //randomly decrease by 0% to 100%
                     float factor = UnityEngine.Random.Range(0f, 1f);

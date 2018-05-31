@@ -8,25 +8,35 @@ public class Manager : MonoBehaviour {
     public GameObject Ovum;
 
     private bool isTraning = false;
-    private int populationSize = 50;
+    private int populationSize = 100;
     private int generationNumber = 0;
-    private List<int> layers = new List<int>{ 3, 30, 30, 3}; //3 input and 1 output
+    private List<int> layers = new List<int>{ 2, 4, 2, 3}; //3 input and 1 output
     private List<NeuralNetwork> nets;
     private bool leftMouseDown = false;
     private List<Spermatozoon> spermazoons = null;
-    List<KeyValuePair<float, int>> _weightedIndexes = new List<KeyValuePair<float, int>>();
+    List<KeyValuePair<int, float>> _weightedIndexes = new List<KeyValuePair<int, float>>();
 
+
+    public float matchTime = 35f;
     public int timescale = 10;
 
-    int GetRandomItemWithWeight(float weight)
+    int GetRandomItemWithWeight()
     {
+        float max = 0.0f;
         for(int i = 0; i < _weightedIndexes.Count; ++i)
         {
-            if(weight < _weightedIndexes[i].Key)
+            max += _weightedIndexes[i].Value;
+        }
+
+        float weight = Random.Range(0f, max);
+        for (int i = 0; i < _weightedIndexes.Count; ++i)
+        {
+            weight -= _weightedIndexes[i].Value;
+            if(weight <= 0f)
             {
                 var item = _weightedIndexes[i];
                 _weightedIndexes.RemoveAt(i);
-                return item.Value;
+                return item.Key;
             }
         }
         return -1;
@@ -52,17 +62,15 @@ public class Manager : MonoBehaviour {
                 UnityEngine.Debug.Log("generation: " + generationNumber + " worst: " + (int)nets[nets.Count - 1].GetFitness() + " average: " + avg + " best: " + (int)nets[0].GetFitness());
 
                 _weightedIndexes.Clear();
-                float accum = 0f;
                 for(int i = 0; i < populationSize - 1; ++i)
                 {
-                    accum += nets[i].GetFitness();
-                    _weightedIndexes.Add(new KeyValuePair<float, int>(accum, i));
+                    _weightedIndexes.Add(new KeyValuePair<int, float>(i, nets[i].GetFitness()));
                 }
 
-                while(_weightedIndexes.Count > populationSize * 3 / 4)
+                while(_weightedIndexes.Count > populationSize * 0.75f)
                 {
-                    int a = GetRandomItemWithWeight(Random.Range(0f, accum));
-                    int b = GetRandomItemWithWeight(Random.Range(0f, accum));
+                    int a = GetRandomItemWithWeight();
+                    int b = GetRandomItemWithWeight();
                     if(a >= 0 && b >= 0)
                     {
                         nets[a].CrossOver(nets[b]);
@@ -124,7 +132,7 @@ public class Manager : MonoBehaviour {
     
     IEnumerator TimerCoroutine()
     {
-        yield return new WaitForSeconds(35f / timescale);
+        yield return new WaitForSeconds(matchTime / timescale);
         isTraning = false;
     }
 
@@ -159,7 +167,7 @@ public class Manager : MonoBehaviour {
         for (int i = 0; i < populationSize; i++)
         {
             Spermatozoon spermazoon = Instantiate(SpermazoonOrefab).GetComponent<Spermatozoon>();
-            spermazoon.Init(nets[i], Ovum.transform);
+            spermazoon.Init(nets[i], Ovum.transform, matchTime);
             spermazoons.Add(spermazoon);
         }
     }
