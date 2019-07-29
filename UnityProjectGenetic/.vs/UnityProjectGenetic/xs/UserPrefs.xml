@@ -1,0 +1,40 @@
+﻿<Properties StartupConfiguration="{2A0C5D5B-87FC-EF85-26DF-2987BFEA1192}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Tester.cs">
+    <Files>
+      <File FileName="Assets/Scripts/Neuron.cs" Line="109" Column="28" />
+      <File FileName="Assets/Scripts/NeuralNetwork.cs" Line="65" Column="10" />
+      <File FileName="Assets/Scripts/Spaceship.cs" />
+      <File FileName="Assets/Scripts/Manager.cs" Line="43" Column="36" />
+      <File FileName="Assets/Scripts/Tester.cs" Line="23" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="UnityProjectGenetic" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Tester.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+      <Pad Id="MonoDevelop.UnitTesting.TestPad">
+        <State name="__root__">
+          <Node name="UnityProjectGenetic" expanded="True" selected="True" />
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="86ac9162-5af7-4b5e-8e90-ca322e5bb8fe" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/Users/francisco.ruiz/NeuralNetworkUnity/UnityProjectGenetic/Assets/Scripts/NeuralNetwork.cs" relfile="Assets/Scripts/NeuralNetwork.cs" line="75" column="1" />
+      <Breakpoint file="/Users/francisco.ruiz/NeuralNetworkUnity/UnityProjectGenetic/Assets/Scripts/NeuralNetwork.cs" relfile="Assets/Scripts/NeuralNetwork.cs" line="73" column="1" />
+      <Breakpoint file="/Users/francisco.ruiz/NeuralNetworkUnity/UnityProjectGenetic/Assets/Scripts/NeuralNetwork.cs" relfile="Assets/Scripts/NeuralNetwork.cs" line="69" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
