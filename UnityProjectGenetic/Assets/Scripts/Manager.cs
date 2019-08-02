@@ -23,28 +23,9 @@ public class Manager : MonoBehaviour
     int _generationNumber = 0;
     float _elapsed = 0f;
 
-    private void Awake()
-    {
-        //InitNeuralNetworks();
-    }
-
     private void Start()
     {
-        StartCoroutine(Train());
-    }
-
-    IEnumerator Train()
-    {
-        Tester.Init();
-        for(int i = 0; i < 5000; ++i)
-        {
-            for(int j = 0; j < 10; ++j)
-            {
-                Tester.TrainStep();
-            }
-            yield return null;
-        }
-		Tester.TestResults();
+        InitNeuralNetworks();
     }
 
     void Update ()
@@ -61,7 +42,7 @@ public class Manager : MonoBehaviour
                 break;
         }
 
-        if(_elapsed >= MatchTime)
+        if (_elapsed >= MatchTime)
         {
             _elapsed = 0f;
             ResetStatus();

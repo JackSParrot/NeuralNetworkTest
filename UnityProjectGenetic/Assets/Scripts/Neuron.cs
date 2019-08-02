@@ -4,13 +4,11 @@ using Layer = System.Collections.Generic.List<Neuron>;
 
 public class Neuron
 {
-    static float kMutationRate = 0.6f;
+    static float kMutationRate = 0.6f;// percentage
 
     private int _myIndex = 0;
     private float _outputVal = 0.0f;
     private float _bias = 0.0f;
-    private float _outputDerivative = 0.0f;
-    private float _error = 0.0f;
     private List<float> _outputWeights = new List<float>();
 
     public Neuron(int numOutputs, int myIndex)
@@ -39,19 +37,9 @@ public class Neuron
         return (float)(1.0 / (1.0 + Math.Exp(-value)));
     }
 
-    static float TransferFunctionDerivative(float value)
-    {
-        return value * (1.0f - value);
-    }
-
     public float GetOutputValue() 
     {
         return _outputVal;
-    }
-
-    public float GetOutputDerivative()
-    {
-        return _outputDerivative;
     }
 
     public void SetOutputValue(float value)
@@ -64,38 +52,6 @@ public class Neuron
         }
     }
 
-    private float SumContributions(Layer nextLayer)
-    {
-        float sum = 0f;
-        for (int n = 0; n < nextLayer.Count; ++n)
-        {
-            sum += _outputWeights[n] * nextLayer[n]._error * GetOutputDerivative();
-        }
-        return sum;
-    }
-
-    public void CalcError(Layer nextLayer)
-    {
-        _error = SumContributions(nextLayer);
-    }
-
-    public void CalcError(float targetVal)
-    {
-        _error = GetOutputDerivative() * (targetVal - GetOutputValue());
-    }
-
-    public void UpdateInputWeights(Layer prevLayer)
-    {
-        foreach (var neuron in prevLayer)
-        {
-            float newDeltaWeight =
-                    neuron.GetOutputValue()
-                    * _error;
-            neuron._outputWeights[_myIndex] += newDeltaWeight;
-        }
-        _bias += _error;
-    }
-
     public void FeedForward(Layer prevLayer)
     {
         float sum = _bias;
@@ -106,7 +62,6 @@ public class Neuron
             sum += val * weight;
         }
         _outputVal = TransferFunction(sum);
-        _outputDerivative = TransferFunctionDerivative(_outputVal);
     }
 
     float GetMutation(float prev)

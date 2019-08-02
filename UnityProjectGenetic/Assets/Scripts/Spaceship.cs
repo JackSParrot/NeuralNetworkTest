@@ -40,7 +40,7 @@ public class Spaceship : MonoBehaviour
         float speed = 0f;
         if (moveForward > 0.9f)
         {
-            speed += 5f;
+            speed += 10f;
         }
         float rotation = 0f;
         if (moveRight > .9f)
@@ -53,12 +53,13 @@ public class Spaceship : MonoBehaviour
         }
 
         transform.position = transform.position + (direction * speed * deltatime);
-        transform.Rotate(new Vector3(0f, 0f, rotation));
+        transform.rotation = Quaternion.Euler(0f, 0f, transform.rotation.eulerAngles.z + rotation);
+        //transform.Rotate(new Vector3(0f, 0f, rotation));
 
         elapsed = Mathf.Min(elapsed + deltatime, lifetime);
 
         float fitness = normalizedDistanceInv * 2f;
-        net.AddFitness(fitness * fitness * fitness);
+        net.AddFitness(fitness * fitness);
     }
 
     public void Init(NeuralNetwork net, Transform planet, float duration)

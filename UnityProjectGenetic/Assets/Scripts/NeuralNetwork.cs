@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Layer = System.Collections.Generic.List<Neuron>;
 
 public class NeuralNetwork
@@ -51,50 +50,6 @@ public class NeuralNetwork
             foreach(var n in _layers[layerNum])
             {
                 n.FeedForward(prevLayer);
-            }
-        }
-    }
-
-    public void BackPropagation(List<float> targetVals)
-    {
-        //Calculate overall net error (RMS of output neuron errors)
-        Layer outputLayer = _layers[_layers.Count - 1];
-
-        _error = 0.0f;
-        for (int n = 0; n < outputLayer.Count; ++n)
-        {
-            float delta = outputLayer[n].GetOutputDerivative() * (targetVals[n] - outputLayer[n].GetOutputValue());
-            _error += delta * delta;
-        }
-        _error /= outputLayer.Count; // get average error squared
-        _error = (float)Math.Sqrt(_error); // calculate RMS
-
-        //Calculate output layer error
-        for (int n = 0; n < outputLayer.Count; ++n)
-        {
-            outputLayer[n].CalcError(targetVals[n]);
-        }
-
-        //Calculate gradients on hidden layers
-        for (int layerNum = _layers.Count - 2; layerNum > 0; --layerNum)
-        {
-            Layer hiddenLayer = _layers[layerNum];
-            Layer nextLayer = _layers[layerNum + 1];
-            for (int n = 0; n < hiddenLayer.Count; ++n)
-            {
-                hiddenLayer[n].CalcError(nextLayer);
-            }
-        }
-
-        //for all layers from outputs to first hidden layer
-        //update connection weights
-        for (int layerNum = _layers.Count - 1; layerNum > 0; --layerNum)
-        {
-            Layer layer = _layers[layerNum];
-            Layer prevLayer = _layers[layerNum - 1];
-            for (int n = 0; n < layer.Count; ++n)
-            {
-                layer[n].UpdateInputWeights(prevLayer);
             }
         }
     }
