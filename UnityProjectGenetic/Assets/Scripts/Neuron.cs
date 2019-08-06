@@ -4,7 +4,7 @@ using Layer = System.Collections.Generic.List<Neuron>;
 
 public class Neuron
 {
-    static float kMutationRate = 0.6f;// percentage
+    static float kMutationRate = 0.5f;// percentage
 
     private int _myIndex = 0;
     private float _outputVal = 0.0f;
@@ -103,7 +103,7 @@ public class Neuron
     {
         for(int c = 0; c < _outputWeights.Count; ++c)
         {
-            if ((float)CustomRandom.rng.NextDouble() > 0.75f)
+            if (CustomRandom.rng.NextDouble() > 0.75)
             {
                 _outputWeights[c] = otherNeuron._outputWeights[c];
             }

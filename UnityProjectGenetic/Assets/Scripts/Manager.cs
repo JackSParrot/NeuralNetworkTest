@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 
 public static class CustomRandom
@@ -11,10 +10,11 @@ public class Manager : MonoBehaviour
 {
     public GameObject SpaceshipPrefab;
     public GameObject Planet;
+    public bool Visualize = true;
     public int PopulationSize = 100;
     public float MatchTime = 20f;
     public int Timescale = 100;
-    public List<int> _topology = new List<int>{ 3, 4, 4, 3 }; //3 input and 3 output
+    List<int> _topology = new List<int>{ 3, 5, 5, 3 }; 
 
     List<NeuralNetwork> _nets = new List<NeuralNetwork>();
     List<Spaceship> _spaceships = new List<Spaceship>();
@@ -35,7 +35,7 @@ public class Manager : MonoBehaviour
         {
             for (int i = 0; i < _spaceships.Count; ++i)
             {
-                _spaceships[i].update(dt);
+                _spaceships[i].UpdateDelta(dt);
             }
             _elapsed += dt;
             if (_elapsed >= MatchTime)
@@ -71,7 +71,7 @@ public class Manager : MonoBehaviour
         }
         _weightedIndexes.Sort((a, b) => 1 - 2 * Random.Range(0, 1));
 
-        for (int i = 5; i < PopulationSize / 5; ++i)
+        for (int i = 4; i < PopulationSize / 4; ++i)
         {
             _nets[i].CrossOver(_nets[GetRandomItemWithWeight()]);
         }
@@ -103,8 +103,12 @@ public class Manager : MonoBehaviour
     {
         for (int i = 0; i < PopulationSize; i++)
         {
-            _spaceships[i].transform.position = new Vector3(Random.Range(-20f, 20f), Random.Range(-20f, 20f), 0);
-            _spaceships[i].transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Random.Range(0f, 360f)));
+            _spaceships[i].Reposition(Planet.transform.position.x,
+                                      Planet.transform.position.y,
+                                      Random.Range(Spaceship.maxDistance * 0.75f, Spaceship.maxDistance * 0.9f),
+                                      Random.Range(Spaceship.maxDistance * 0.1f, Spaceship.maxDistance * 0.9f),
+                                      Random.Range(0f, 360f),
+                                      Visualize);
         }
     }
 
@@ -112,7 +116,7 @@ public class Manager : MonoBehaviour
     {
         if (PopulationSize % 2 != 0)
         {
-            PopulationSize = 20; 
+            PopulationSize = 4; 
         }
 
         _nets.Clear();

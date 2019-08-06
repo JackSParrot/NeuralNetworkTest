@@ -1,10 +1,10 @@
 ﻿<Properties StartupConfiguration="{2A0C5D5B-87FC-EF85-26DF-2987BFEA1192}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Manager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Neuron.cs">
     <Files>
       <File FileName="Assets/Scripts/Neuron.cs" Line="7" Column="52" />
-      <File FileName="Assets/Scripts/NeuralNetwork.cs" Line="21" Column="32" />
-      <File FileName="Assets/Scripts/Spaceship.cs" Line="43" Column="24" />
-      <File FileName="Assets/Scripts/Manager.cs" Line="33" Column="9" />
+      <File FileName="Assets/Scripts/NeuralNetwork.cs" Line="13" Column="1" />
+      <File FileName="Assets/Scripts/Spaceship.cs" Line="129" Column="41" />
+      <File FileName="Assets/Scripts/Manager.cs" Line="18" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -12,7 +12,7 @@
           <Node name="UnityProjectGenetic" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="Manager.cs" selected="True" />
+                <Node name="Neuron.cs" selected="True" />
               </Node>
             </Node>
           </Node>

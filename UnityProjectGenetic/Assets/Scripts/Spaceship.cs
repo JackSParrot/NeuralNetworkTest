@@ -3,19 +3,36 @@ using UnityEngine;
 
 public class Spaceship : MonoBehaviour
 {
-    const float maxDistance = 90f;
+    public const float maxDistance = 300f;
     private float lifetime = 0f;
     private float elapsed = 0f;
     public Transform planet;
+    public bool Manual = false;
 
     private NeuralNetwork net;
 
-    public void update(float deltatime)
+    Vector3 _position = new Vector3();
+    Vector3 _target = new Vector3();
+    float _rotation;
+
+    bool _visualize;
+
+    void Update()
     {
-        Vector3 deltaVector = (planet.position - transform.position);
+        if(!_visualize)
+        {
+            return;
+        }
+        transform.position = _position;
+        transform.rotation = Quaternion.Euler(0f, 0f, _rotation);
+    }
+
+    public void UpdateDelta(float deltatime)
+    {
+        Vector3 deltaVector = _target - _position;
         float magnitude = deltaVector.magnitude;
         Vector3 directionToTarget = deltaVector / magnitude;
-        Vector3 direction = transform.up;
+        Vector3 direction = new Vector3(Mathf.Cos(_rotation * Mathf.Deg2Rad), Mathf.Sin(_rotation * Mathf.Deg2Rad), 0f);
 
         float normalizedDistanceInv = 1f - Mathf.Min(magnitude, maxDistance) / maxDistance;// 0 ... 1
         float angleToTarget = Vector3.SignedAngle(direction, directionToTarget, new Vector3(0f, 0f, -1f)); //-180 ... 180
@@ -24,19 +41,42 @@ public class Spaceship : MonoBehaviour
         var leftAngle = -Mathf.Min(normalizedAngle, 0f);// -1 .. 0 -> 0 ... 1
         var rightAngle = Mathf.Max(normalizedAngle, 0f);// 0 .. 1 -> 0 ... 1
 
-        var inputs = new List<float>
+        List<float> output;
+        if (net != null)
         {
-            normalizedDistanceInv,
-            leftAngle,
-            rightAngle
-        };
-        net.FeedForward(inputs);
-
-        List<float> output = net.GetResults();
+            var inputs = new List<float>
+            {
+                normalizedDistanceInv,
+                leftAngle,
+                rightAngle
+            };
+            net.FeedForward(inputs);
+            output = net.GetResults();
+            float fitness = normalizedDistanceInv * 2f;
+            net.AddFitness(fitness * fitness * fitness);
+        }
+        else if(Manual)
+        {
+            output = new List<float>
+            {
+                Input.GetKey(KeyCode.W) ? 1f : 0f,
+                Input.GetKey(KeyCode.D) ? 1f : 0f,
+                Input.GetKey(KeyCode.A) ? 1f : 0f
+            };
+        }
+        else
+        {
+            output = new List<float>
+            {
+                normalizedDistanceInv < 0.99f ? 1f : 0f,
+                rightAngle > 0.05f ? 1f : 0f,
+                leftAngle > 0.05f ? 1f : 0f
+            };
+        }
         float moveForward = output[0];
-        float moveLeft = output[1];
-        float moveRight = output[2];
-
+        float moveRight = output[1];
+        float moveLeft = output[2];
+        
         float speed = 0f;
         if (moveForward > 0.9f)
         {
@@ -45,21 +85,28 @@ public class Spaceship : MonoBehaviour
         float rotation = 0f;
         if (moveRight > .9f)
         {
-            rotation += 2.5f;
+            rotation -= 25f;
         }
         if (moveLeft > .9f)
         {
-            rotation -= 2.5f;
+            rotation += 25f;
+        }
+        
+        _rotation += rotation * deltatime;
+        _position += direction * speed * deltatime;
+
+        _position.x = Mathf.Clamp(_position.x, 0f, maxDistance);
+        _position.y = Mathf.Clamp(_position.y, 0f, maxDistance);
+        if(_rotation < 0f)
+        {
+            _rotation += 360f;
+        }
+        if(_rotation > 360f)
+        {
+            _rotation -= 360f;
         }
 
-        transform.position = transform.position + (direction * speed * deltatime);
-        transform.rotation = Quaternion.Euler(0f, 0f, transform.rotation.eulerAngles.z + rotation);
-        //transform.Rotate(new Vector3(0f, 0f, rotation));
-
         elapsed = Mathf.Min(elapsed + deltatime, lifetime);
-
-        float fitness = normalizedDistanceInv * 2f;
-        net.AddFitness(fitness * fitness);
     }
 
     public void Init(NeuralNetwork net, Transform planet, float duration)
@@ -68,5 +115,18 @@ public class Spaceship : MonoBehaviour
         this.net = net;
         lifetime = duration;
         elapsed = 0.0f;
+        Reposition(planet.position.x, planet.position.y, transform.position.x, transform.position.y, transform.rotation.eulerAngles.z);
+    }
+
+    public void Reposition(float targetX, float targetY, float posX, float posY, float rotation, bool visualize = true)
+    {
+        _position.x = posX;
+        _position.y = posY;
+        _rotation = rotation;
+        _visualize = visualize;
+        _target.x = targetX;
+        _target.y = targetY;
+        gameObject.SetActive(visualize);
+        Update();
     }
 }
