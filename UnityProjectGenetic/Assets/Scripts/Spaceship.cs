@@ -47,8 +47,8 @@ public class Spaceship : MonoBehaviour
             var inputs = new List<float>
             {
                 normalizedDistanceInv,
-                leftAngle,
-                rightAngle
+                rightAngle,
+                leftAngle
             };
             net.FeedForward(inputs);
             output = net.GetResults();

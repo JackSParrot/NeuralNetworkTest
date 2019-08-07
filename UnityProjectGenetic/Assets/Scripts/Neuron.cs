@@ -7,8 +7,7 @@ public class Neuron
     static float kMutationRate = 0.5f;// percentage
 
     private int _myIndex = 0;
-    private float _outputVal = 0.0f;
-    private float _bias = 0.0f;
+    private float _outputVal = 0f;
     private List<float> _outputWeights = new List<float>();
 
     public Neuron(int numOutputs, int myIndex)
@@ -18,7 +17,7 @@ public class Neuron
         {
             _outputWeights.Add((float)CustomRandom.rng.NextDouble());
         }
-        _bias = numOutputs > 0 ? (float)CustomRandom.rng.NextDouble() : 0f;
+        _outputVal = 0f;
     }
 
     public void CloneValues(Neuron other)
@@ -29,7 +28,7 @@ public class Neuron
         {
             _outputWeights.Add(conn);
         }
-        _bias = other._bias;
+        _outputVal = other._outputVal;
     }
 
     float TransferFunction(float value)
@@ -45,16 +44,11 @@ public class Neuron
     public void SetOutputValue(float value)
     {
         _outputVal = value;
-        _bias = 0f;
-        for(int i = 0; i < _outputWeights.Count; ++i)
-        {
-            _outputWeights[i] = 1f;
-        }
     }
 
     public void FeedForward(Layer prevLayer)
     {
-        float sum = _bias;
+        float sum = 0f;
         foreach (var neuron in prevLayer)
         {
             float val = neuron.GetOutputValue();
@@ -96,7 +90,6 @@ public class Neuron
         {
             _outputWeights[c] = GetMutation(_outputWeights[c]);
         }
-        _bias = GetMutation(_bias);
     }
 
     public void CrossOver(Neuron otherNeuron)

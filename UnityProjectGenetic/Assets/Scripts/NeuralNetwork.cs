@@ -18,6 +18,9 @@ public class NeuralNetwork
             {
                 layer.Add(new Neuron(numOutputs, neuronNum));
             }
+            var bias = new Neuron(numOutputs, topology[layerNum]);
+            bias.SetOutputValue(1f);
+            layer.Add(bias);
             _layers.Add(layer);
         }
         _fitness = 0f;
@@ -47,8 +50,9 @@ public class NeuralNetwork
         for (int layerNum = 1; layerNum < _layers.Count; ++layerNum)
         {
             Layer prevLayer = _layers[layerNum - 1];
-            foreach(var n in _layers[layerNum])
+            for(int i = 0; i < _layers[layerNum].Count- 1; ++i)
             {
+                var n = _layers[layerNum][i];
                 n.FeedForward(prevLayer);
             }
         }
@@ -58,7 +62,7 @@ public class NeuralNetwork
     {
         var retVal = new List<float>();
         Layer outputLayer = _layers[_layers.Count - 1];
-        for (int n = 0; n < outputLayer.Count; ++n)
+        for (int n = 0; n < outputLayer.Count - 1; ++n)
         {
             retVal.Add(outputLayer[n].GetOutputValue());
         }

@@ -173,9 +173,9 @@ MonoBehaviour:
   SpaceshipPrefab: {fileID: 3030238557227911559, guid: 962ec4b3dea4c418f94d285a7cd5f250,
     type: 3}
   Planet: {fileID: 79172293}
-  Visualize: 0
+  Visualize: 1
   PopulationSize: 100
-  MatchTime: 30
+  MatchTime: 40
   Timescale: 100
 --- !u!1 &2014702368
 GameObject:
