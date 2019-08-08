@@ -65,16 +65,26 @@ public class NeuralNetwork
         }
     }
 
-    public void BackPropagate(List<float> inputs, List<float> desiredOutput)
+    public void Train(List<float> inputs, List<float> desiredOutput)
     {
         FeedForward(inputs);
+        CalculateError(desiredOutput);
+        BackPropagate();
+    }
+
+    void CalculateError(List<float> desiredOutput)
+    {
         var error = 0f;
-        for(int i = 0; i < desiredOutput.Count; ++i)
+        for (int i = 0; i < desiredOutput.Count; ++i)
         {
             _layers[_layers.Count - 1][i].CalculateError(desiredOutput[i]);
             error += _layers[_layers.Count - 1][i].GetError();
         }
         _errors.Add(error);
+    }
+
+    void BackPropagate()
+    {
         for (int i = _layers.Count - 2; i >= 0; --i)
         {
             for (int j = 0; j < _layers[i].Count; ++j)

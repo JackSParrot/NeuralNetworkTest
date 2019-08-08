@@ -64,7 +64,7 @@ public class Spaceship : MonoBehaviour
                 rightAngle > 0.05f ? 1f : 0f,
                 leftAngle > 0.05f ? 1f : 0f
             };
-            _net.BackPropagate(inputs, output);
+            _net.Train(inputs, output);
         }
         else
         {
