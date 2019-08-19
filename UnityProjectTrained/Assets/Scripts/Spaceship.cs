@@ -83,11 +83,11 @@ public class Spaceship : MonoBehaviour
         float rotation = 0f;
         if (moveRight > .9f)
         {
-            rotation -= 25f;
+            rotation -= 45f;
         }
         if (moveLeft > .9f)
         {
-            rotation += 25f;
+            rotation += 45f;
         }
         
         _rotation += rotation * deltatime;

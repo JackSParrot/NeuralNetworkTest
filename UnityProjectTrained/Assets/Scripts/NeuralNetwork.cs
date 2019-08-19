@@ -78,9 +78,9 @@ public class NeuralNetwork
         for (int i = 0; i < desiredOutput.Count; ++i)
         {
             _layers[_layers.Count - 1][i].CalculateError(desiredOutput[i]);
-            error += _layers[_layers.Count - 1][i].GetError();
+            error += (desiredOutput[i] - _output[i]) * (desiredOutput[i] - _output[i]);
         }
-        _errors.Add(error);
+        _errors.Add(error/desiredOutput.Count);
     }
 
     void BackPropagate()
