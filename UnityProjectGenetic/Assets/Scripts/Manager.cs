@@ -14,7 +14,7 @@ public class Manager : MonoBehaviour
     public int PopulationSize = 100;
     public float MatchTime = 20f;
     public int Timescale = 100;
-    List<int> _topology = new List<int>{ 3, 3, 3 }; 
+    List<int> _topology = new List<int>{ 3, 3, 2 }; 
 
     List<NeuralNetwork> _nets = new List<NeuralNetwork>();
     List<Spaceship> _spaceships = new List<Spaceship>();

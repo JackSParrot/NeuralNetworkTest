@@ -70,7 +70,7 @@ public class Manager : MonoBehaviour
 
     void InitPopulation()
     {
-        _net = new NeuralNetwork(new List<int> { 3, 3, 3 });
+        _net = new NeuralNetwork(new List<int> { 3, 3, 2 });
         _spaceships.Clear();
         for (int i = 0; i < PopulationSize; i++)
         {

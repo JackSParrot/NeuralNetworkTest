@@ -2,9 +2,9 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Neuron.cs">
     <Files>
       <File FileName="Assets/Scripts/Neuron.cs" Line="33" Column="1" />
-      <File FileName="Assets/Scripts/NeuralNetwork.cs" Line="60" Column="1" />
-      <File FileName="Assets/Scripts/Spaceship.cs" Line="48" Column="14" />
-      <File FileName="Assets/Scripts/Manager.cs" Line="17" Column="46" />
+      <File FileName="Assets/Scripts/NeuralNetwork.cs" />
+      <File FileName="Assets/Scripts/Spaceship.cs" Line="80" Column="1" />
+      <File FileName="Assets/Scripts/Manager.cs" Line="51" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -22,7 +22,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="35968e6b-7cf1-4e26-b70b-a19163641763" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="18fe14c0-e169-4eb6-90a8-1fb681a53e75" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
       <Breakpoint file="/Users/francisco.ruiz/NeuralNetworkUnity/NeuralNetworkTest/UnityProjectGenetic/Assembly-CSharp.csproj" relfile="Assembly-CSharp.csproj" line="25" column="1" />

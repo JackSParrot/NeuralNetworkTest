@@ -1,10 +1,10 @@
 ﻿<Properties StartupConfiguration="{477192EE-3ECA-335F-4C41-6DE5E6305AEC}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Neuron.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Spaceship.cs">
     <Files>
       <File FileName="Assets/Scripts/Neuron.cs" Line="102" Column="17" />
-      <File FileName="Assets/Scripts/NeuralNetwork.cs" Line="93" Column="35" />
-      <File FileName="Assets/Scripts/Manager.cs" Line="67" Column="22" />
-      <File FileName="Assets/Scripts/Spaceship.cs" Line="67" Column="21" />
+      <File FileName="Assets/Scripts/NeuralNetwork.cs" />
+      <File FileName="Assets/Scripts/Manager.cs" Line="70" Column="1" />
+      <File FileName="Assets/Scripts/Spaceship.cs" Line="68" Column="13" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -12,7 +12,7 @@
           <Node name="UnityProjectTrained" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="Neuron.cs" selected="True" />
+                <Node name="Spaceship.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -22,7 +22,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="e2bdcb04-8665-49ba-8f8a-766ac2609b8b" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="18fe14c0-e169-4eb6-90a8-1fb681a53e75" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

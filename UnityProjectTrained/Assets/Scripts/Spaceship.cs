@@ -60,7 +60,6 @@ public class Spaceship : MonoBehaviour
         {
             output = new List<float>
             {
-                normalizedDistanceInv < 0.99f ? 1f : 0f,
                 rightAngle > 0.05f ? 1f : 0f,
                 leftAngle > 0.05f ? 1f : 0f
             };
@@ -71,23 +70,18 @@ public class Spaceship : MonoBehaviour
             _net.FeedForward(inputs);
             output = _net.GetResults();
         }
-        float moveForward = output[0];
-        float moveRight = output[1];
-        float moveLeft = output[2];
+        float moveRight = output[0];
+        float moveLeft = output[1];
         
-        float speed = 0f;
-        if (moveForward > 0.9f)
-        {
-            speed += 10f;
-        }
+        float speed = 10f;
         float rotation = 0f;
         if (moveRight > .9f)
         {
-            rotation -= 45f;
+            rotation -= 90f;
         }
         if (moveLeft > .9f)
         {
-            rotation += 45f;
+            rotation += 90f;
         }
         
         _rotation += rotation * deltatime;
